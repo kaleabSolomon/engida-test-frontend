@@ -9,7 +9,7 @@ const Header: React.FC = () => {
         <div className="w-10 h-10 rounded-full bg-blue-500 flex items-center justify-center">
           <div className="w-5 h-5 bg-white rounded-full"></div>
         </div>{" "}
-        <span className="ml-2 text-xl font-bold">JOT</span>
+        <span className="ml-2 text-xl font-bold text-white">JOT</span>
       </div>
 
       <Button
