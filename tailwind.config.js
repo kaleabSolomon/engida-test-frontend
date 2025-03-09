@@ -5,6 +5,7 @@ export default {
     extend: {
       backgroundImage: {
         heroImg: "url('/src/assets/jot-bg.jpg')",
+        authbg: "url('src/assets/auth-bg.png')",
       },
     },
   },
