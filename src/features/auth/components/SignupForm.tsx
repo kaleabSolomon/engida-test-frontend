@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { Form, Input, Button, notification } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { RootState } from "@reduxjs/toolkit/query";
+import { RootState } from "../../../store";
 import { AppDispatch } from "../../../store";
 import { resetError, signUp } from "../authSlice";
 import { FaLock, FaMailBulk, FaUser } from "react-icons/fa";

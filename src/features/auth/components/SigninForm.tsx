@@ -1,9 +1,8 @@
 import React, { useEffect } from "react";
-import { Form, Input, Button, Checkbox, notification } from "antd";
-import { RootState } from "@reduxjs/toolkit/query";
+import { Form, Input, Button, notification } from "antd";
 import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { AppDispatch } from "../../../store";
+import { AppDispatch, RootState } from "../../../store";
 import { resetError, signIn } from "../authSlice";
 import { useNavigate } from "react-router-dom";
 import { FaLock, FaUser } from "react-icons/fa";
@@ -11,7 +10,6 @@ import { FaLock, FaUser } from "react-icons/fa";
 interface SignInFormValues {
   email: string;
   password: string;
-  remember: boolean;
 }
 
 const SignInForm: React.FC = () => {
@@ -22,6 +20,9 @@ const SignInForm: React.FC = () => {
   );
 
   useEffect(() => {
+    console.log("error:", error);
+  }, [error]);
+  useEffect(() => {
     // Redirect if authenticated
     if (isAuthenticated) {
       navigate("/dashboard");
@@ -29,17 +30,21 @@ const SignInForm: React.FC = () => {
   }, [isAuthenticated, navigate]);
 
   useEffect(() => {
-    // Show error notification if any
     if (error) {
+      console.log("Triggering notification for error:", error); // Debugging
       notification.error({
         message: "Sign In Failed",
         description: error,
         placement: "topRight",
       });
-      dispatch(resetError());
+
+      // Delay resetting the error
+      const timeout = setTimeout(() => dispatch(resetError()), 500);
+
+      // Cleanup timeout on component unmount
+      return () => clearTimeout(timeout);
     }
   }, [error, dispatch]);
-
   const onFinish = async (values: SignInFormValues) => {
     const { email, password } = values;
 
