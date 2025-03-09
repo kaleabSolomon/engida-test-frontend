@@ -5,17 +5,20 @@ import {
   Route,
   Navigate,
 } from "react-router-dom";
-import { Provider } from "react-redux";
+import { Provider, useSelector } from "react-redux";
 
 import PrivateRoute from "./components/PrivateRoute"; // You would need to create this
 import Layout from "./components/Layout";
 import Hero from "./components/Hero";
 import SignIn from "./pages/Signin";
 import SignUp from "./pages/Signup";
-import { store } from "./store";
+import { RootState, store } from "./store";
 import TasksPage from "./pages/TasksPage";
 
 const App: React.FC = () => {
+  const isAuthenticated = useSelector(
+    (state: RootState) => state.auth.isAuthenticated
+  ); // Adjust based on your state structure
   return (
     <Provider store={store}>
       <Router>
@@ -23,9 +26,13 @@ const App: React.FC = () => {
           <Route
             path="/"
             element={
-              <Layout>
-                <Hero />
-              </Layout>
+              isAuthenticated ? (
+                <Navigate to="/dashboard" replace />
+              ) : (
+                <Layout>
+                  <Hero />
+                </Layout>
+              )
             }
           />
           <Route path="/signin" element={<SignIn />} />
