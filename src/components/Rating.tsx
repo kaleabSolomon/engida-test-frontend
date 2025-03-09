@@ -10,7 +10,7 @@ const Rating: React.FC = () => {
           alt="Product Hunt"
           className="w-5 h-5 mr-2"
         />{" "}
-        <span className="text-sm font-medium text-gray-600">
+        <span className="text-sm font-medium text-white">
           Trending on Product Hunt
         </span>
       </div>

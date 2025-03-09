@@ -7,9 +7,13 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div className="min-h-screen bg-gradient-to-br from-white to-blue-200">
-      <Header />
-      <main>{children}</main>
+    <div className="min-h-screen bg-heroImg bg-center bg-cover bg-no-repeat ">
+      <div className="h-full w-full bg-black bg-clip-padding backdrop-filter bg-opacity-60">
+        <Header />
+        <main className="flex items-center justify-center flex-col">
+          {children}
+        </main>
+      </div>
     </div>
   );
 };

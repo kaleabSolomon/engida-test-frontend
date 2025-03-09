@@ -3,18 +3,21 @@ import { Button } from "antd";
 import TaskCard from "./TaskCard";
 import Rating from "./Rating";
 import { FaArrowRight } from "react-icons/fa";
+import { TaskStatus } from "../types/task";
 
 const Hero: React.FC = () => {
   return (
-    <div className="flex flex-col items-center justify-center text-center px-4 pt-8 pb-16 relative">
+    <div className="max-w-[1000px] min-h-screen  flex flex-col items-center justify-start text-center px-4 pt-32  pb-16 relative">
       <div className="max-w-4xl mx-auto text-center">
-        <h1 className="text-5xl md:text-6xl font-bold mb-2">Manage Your</h1>
+        <h1 className="text-5xl md:text-6xl font-bold mb-2 text-white">
+          Manage Your
+        </h1>
 
         <h1 className="text-5xl md:text-6xl font-bold text-blue-500 mb-6">
           Productivity
         </h1>
 
-        <p className="text-xl mb-10 max-w-2xl mx-auto">
+        <p className="text-xl mb-10 max-w-2xl mx-auto text-white">
           Plan Your Tasks, stay on track, and deliver on time without
           overworking yourself.
         </p>
@@ -36,18 +39,48 @@ const Hero: React.FC = () => {
           <Rating />
         </div>
       </div>
-
-      {/* Task Cards - Positioned Absolutely */}
-      <div className="absolute left-0 top-1/3 -translate-x-1/4 rotate-[-10deg]">
-        <TaskCard title="Web Visual Design" />
+      {/* Desktop Layout */}
+      <div className="hidden lg:block">
+        <div className="absolute left-0 top-1/3 -translate-x-1/4 rotate-[-10deg]">
+          <TaskCard
+            title="Export The figma file"
+            status={TaskStatus.inProgress}
+            date="Today"
+          />
+        </div>
+        <div className="absolute left-2/4 top-2/3 translate-x-1/4 rotate-[-10deg]">
+          <TaskCard
+            title="get groceries"
+            date="5 seconds ago"
+            status={TaskStatus.done}
+          />
+        </div>
+        <div className="absolute right-0 top-0 translate-x-1/4 rotate-[10deg]">
+          <TaskCard
+            title="Add Authentication"
+            status={TaskStatus.todo}
+            date="2 days ago"
+          />
+        </div>
       </div>
 
-      <div className="absolute left-1/4 top-1/4">
-        <TaskCard title="UX Copywrite" date="Today" progress={3} total={7} />
-      </div>
-
-      <div className="absolute right-0 top-1/3 translate-x-1/4 rotate-[10deg]">
-        <TaskCard title="UI Animations" />
+      {/* Mobile Layout: Stack Cards at the Bottom */}
+      <div className="lg:hidden flex flex-col items-center gap-4 mt-12">
+        <TaskCard
+          title="Export The figma file"
+          status={TaskStatus.inProgress}
+          date="Today"
+        />
+        <TaskCard
+          title="get groceries"
+          date="5 seconds ago"
+          status={TaskStatus.done}
+        />
+        <TaskCard
+          title="Add Authentication"
+          status={TaskStatus.todo}
+          date="2 days ago"
+        />
       </div>
     </div>
   );
