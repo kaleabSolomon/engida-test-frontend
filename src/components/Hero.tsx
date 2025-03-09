@@ -4,8 +4,10 @@ import TaskCard from "./TaskCard";
 import Rating from "./Rating";
 import { FaArrowRight } from "react-icons/fa";
 import { TaskStatus } from "../types/task";
+import { useNavigate } from "react-router-dom";
 
 const Hero: React.FC = () => {
+  const navigate = useNavigate();
   return (
     <div className="max-w-[1000px] min-h-screen  flex flex-col items-center justify-start text-center px-4 pt-32  pb-16 relative">
       <div className="max-w-4xl mx-auto text-center">
@@ -27,6 +29,7 @@ const Hero: React.FC = () => {
             type="primary"
             shape="default"
             className="group duration-200 flex items-center gap-2"
+            onClick={() => navigate("/signin")}
           >
             Get Started
             <span className="relative transition-transform duration-200 group-hover:translate-x-1">
@@ -41,7 +44,7 @@ const Hero: React.FC = () => {
       </div>
       {/* Desktop Layout */}
       <div className="hidden lg:block">
-        <div className="absolute left-0 top-1/3 -translate-x-1/4 rotate-[-10deg]">
+        <div className="absolute left-0 top-96 -translate-x-1/4 rotate-[-10deg]">
           <TaskCard
             title="Export The figma file"
             status={TaskStatus.inProgress}

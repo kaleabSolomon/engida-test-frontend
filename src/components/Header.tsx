@@ -15,7 +15,6 @@ const Header: React.FC = () => {
   console.log(isAuthenticated);
   const handleLogout = (): void => {
     dispatch(logout());
-    navigate("/");
   };
   return (
     <header
@@ -41,6 +40,7 @@ const Header: React.FC = () => {
           type="primary"
           shape="default"
           className="group duration-200 flex items-center gap-2"
+          onClick={() => navigate("/signin")}
         >
           Get Started
           <span className="relative transition-transform duration-200 group-hover:translate-x-1">
