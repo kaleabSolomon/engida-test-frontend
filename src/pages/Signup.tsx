@@ -6,7 +6,7 @@ const SignUp: React.FC = () => {
   return (
     <AuthLayout
       title="Create an Account"
-      subtitle="Join Fintask to manage your team's productivity"
+      subtitle="Join JOT to manage your productivity"
     >
       <SignUpForm />
     </AuthLayout>
