@@ -19,9 +19,7 @@ const SignInForm: React.FC = () => {
     (state: RootState) => state.auth
   );
 
-  useEffect(() => {
-    console.log("error:", error);
-  }, [error]);
+  useEffect(() => {}, [error]);
   useEffect(() => {
     // Redirect if authenticated
     if (isAuthenticated) {
@@ -31,7 +29,6 @@ const SignInForm: React.FC = () => {
 
   useEffect(() => {
     if (error) {
-      console.log("Triggering notification for error:", error); // Debugging
       notification.error({
         message: "Sign In Failed",
         description: error,

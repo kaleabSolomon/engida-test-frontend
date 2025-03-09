@@ -54,7 +54,6 @@ export const signUp = createAsyncThunk(
   async (userData: SignUpRequest, thunkAPI) => {
     try {
       const response = await authService.signUp(userData);
-      console.log(response);
 
       // Store the token and user in localStorage
       localStorage.setItem("token", response.access_token);
@@ -62,7 +61,6 @@ export const signUp = createAsyncThunk(
       const decodedUser = jwtDecode(response.access_token);
 
       localStorage.setItem("user", JSON.stringify(decodedUser));
-      //   localStorage.setItem("user", JSON.stringify(response.user));
 
       // Set the auth header for future requests
       authService.setAuthHeader(response.access_token);

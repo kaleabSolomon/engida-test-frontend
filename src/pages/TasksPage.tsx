@@ -18,12 +18,9 @@ const TasksPage: React.FC = () => {
     setIsModalOpen(true);
   };
 
-  console.log(user);
-
   const handleOk = async (): Promise<void> => {
     try {
       const values = await form.validateFields();
-      console.log("Form Values:", values);
 
       const resultAction = await dispatch(createTask(values));
 

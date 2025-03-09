@@ -42,7 +42,6 @@ const SignUpForm: React.FC = () => {
   }, [error, dispatch]);
 
   const onFinish = async (values: SignUpFormValues) => {
-    console.log("values", values);
     const { firstName, lastName, email, password, confirmPassword } = values;
 
     const resultAction = await dispatch(

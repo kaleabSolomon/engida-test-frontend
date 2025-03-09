@@ -12,7 +12,6 @@ const Header: React.FC = () => {
   const navigate = useNavigate();
   const { isAuthenticated } = useSelector((state: RootState) => state.auth);
 
-  console.log(isAuthenticated);
   const handleLogout = (): void => {
     dispatch(logout());
   };

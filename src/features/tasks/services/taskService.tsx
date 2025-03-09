@@ -3,7 +3,6 @@ import { api } from "../../../utils/axios";
 
 export const taskService = {
   fetchTasks: async (): Promise<Task[]> => {
-    console.log(api);
     const response = await api.get("/task");
     return response.data.data;
   },
