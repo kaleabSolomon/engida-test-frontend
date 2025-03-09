@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Form, Input, Button, notification, Divider } from "antd";
+import { Form, Input, Button, notification } from "antd";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { RootState } from "@reduxjs/toolkit/query";
@@ -8,7 +8,8 @@ import { resetError, signUp } from "../authSlice";
 import { FaLock, FaMailBulk, FaUser } from "react-icons/fa";
 
 interface SignUpFormValues {
-  name: string;
+  firstName: string;
+  lastName: string;
   email: string;
   password: string;
   confirmPassword: string;
@@ -41,9 +42,18 @@ const SignUpForm: React.FC = () => {
   }, [error, dispatch]);
 
   const onFinish = async (values: SignUpFormValues) => {
-    const { name, email, password } = values;
+    console.log("values", values);
+    const { firstName, lastName, email, password, confirmPassword } = values;
 
-    const resultAction = await dispatch(signUp({ name, email, password }));
+    const resultAction = await dispatch(
+      signUp({
+        firstName,
+        lastName,
+        email,
+        password,
+        passwordConfirm: confirmPassword,
+      })
+    );
 
     if (signUp.fulfilled.match(resultAction)) {
       notification.success({
@@ -63,12 +73,22 @@ const SignUpForm: React.FC = () => {
       size="large"
     >
       <Form.Item
-        name="name"
-        rules={[{ required: true, message: "Please input your name!" }]}
+        name="firstName"
+        rules={[{ required: true, message: "Please input your first name!" }]}
       >
         <Input
           prefix={<FaUser className="text-gray-400" />}
-          placeholder="Full Name"
+          placeholder="First Name"
+          className="rounded-lg h-12"
+        />
+      </Form.Item>
+      <Form.Item
+        name="lastName"
+        rules={[{ required: true, message: "Please input your last name!" }]}
+      >
+        <Input
+          prefix={<FaUser className="text-gray-400" />}
+          placeholder="Last Name"
           className="rounded-lg h-12"
         />
       </Form.Item>
