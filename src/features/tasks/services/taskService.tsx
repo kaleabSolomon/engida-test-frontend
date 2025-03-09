@@ -5,12 +5,17 @@ const API_URL = "http://localhost:3333/api/task";
 
 export const taskService = {
   fetchTasks: async (): Promise<Task[]> => {
+    console.log(api);
     const response = await api.get(API_URL);
     return response.data.data;
   },
 
   createTask: async (task: Task): Promise<Task> => {
     const response = await api.post(API_URL, task);
+    return response.data.data;
+  },
+  updateTask: async (taskId: string, updates: Partial<Task>): Promise<Task> => {
+    const response = await api.patch(`${API_URL}/${taskId}`, updates);
     return response.data.data;
   },
 

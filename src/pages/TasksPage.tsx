@@ -4,21 +4,35 @@ import { useState } from "react";
 import TasksTable from "../features/tasks/components/TasksTable";
 
 import Header from "../components/Header";
+import { useDispatch, useSelector } from "react-redux";
+import { createTask } from "../features/tasks/taskSlice";
+import { AppDispatch, RootState } from "../store";
 
 const TasksPage: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
   const [form] = Form.useForm();
-
+  const dispatch = useDispatch<AppDispatch>();
+  const { status } = useSelector((state: RootState) => state.tasks);
+  const { user } = useSelector((state: RootState) => state.auth);
   const showModal = (): void => {
     setIsModalOpen(true);
   };
+
+  console.log(user);
 
   const handleOk = async (): Promise<void> => {
     try {
       const values = await form.validateFields();
       console.log("Form Values:", values);
-      setIsModalOpen(false);
-      form.resetFields();
+
+      const resultAction = await dispatch(createTask(values));
+
+      if (createTask.fulfilled.match(resultAction)) {
+        setIsModalOpen(false);
+        form.resetFields();
+      } else {
+        console.error("Task creation failed:", resultAction.error.message);
+      }
     } catch (error) {
       console.log("Validation Failed:", error);
     }
@@ -29,12 +43,16 @@ const TasksPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen">
+    <div className="h-screen">
       <Header />
-      <div className="p-6 bg-gray-50">
+      <div className="p-6 h-full bg-gray-50">
         <div className="max-w-7xl mx-auto">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-semibold">My Tasks</h2>
+          <h2 className="text-2xl font-semibold mt-3 mb-6">
+            Welcome, {user.firstName}
+          </h2>
+
+          <TasksTable />
+          <div className="flex justify-end mt-20">
             <Button
               type="primary"
               onClick={showModal}
@@ -44,15 +62,14 @@ const TasksPage: React.FC = () => {
               Add New Task
             </Button>
           </div>
-
-          <TasksTable />
-
           <Modal
             title="Create New Task"
             open={isModalOpen}
             onOk={handleOk}
             onCancel={handleCancel}
             okText="Create Task"
+            confirmLoading={status === "loading"}
+            cancelButtonProps={{ disabled: status === "loading" }}
             okButtonProps={{ className: "bg-blue-500 hover:bg-blue-600" }}
           >
             <Form form={form} layout="vertical">
