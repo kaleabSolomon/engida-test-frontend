@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       backgroundImage: {
-        heroImg: "url('/src/assets/jot-bg.jpg')",
-        authbg: "url('src/assets/auth-bg.png')",
+        heroImg: "url('/public/assets/jot-bg.jpg')",
+        authbg: "url('/public/assets/auth-bg.png')",
       },
     },
   },

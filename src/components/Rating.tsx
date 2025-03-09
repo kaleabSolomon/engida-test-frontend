@@ -1,5 +1,5 @@
 import { IoMdArrowDropup } from "react-icons/io";
-import productHuntLogo from "../assets/productHunt.svg";
+import productHuntLogo from "../../public/assets/productHunt.svg";
 
 const Rating: React.FC = () => {
   return (
