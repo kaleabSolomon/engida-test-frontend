@@ -20,21 +20,6 @@ export const authService = {
     localStorage.removeItem("token");
     localStorage.removeItem("user");
   },
-
-  getCurrentUser: (): { token: string; user: any } | null => {
-    const token = localStorage.getItem("token");
-    const user = localStorage.getItem("user");
-
-    if (token && user) {
-      return {
-        token,
-        user: JSON.parse(user),
-      };
-    }
-
-    return null;
-  },
-
   // For authenticated requests
   setAuthHeader: (token: string): void => {
     api.defaults.headers.common["Authorization"] = `Bearer ${token}`;
