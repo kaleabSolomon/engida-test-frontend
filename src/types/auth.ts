@@ -6,14 +6,11 @@ export interface SignInRequest {
 export interface SignUpRequest {
   email: string;
   password: string;
-  name: string;
+  firstName: string;
+  lastName: string;
+  passwordConfirm: string;
 }
 
 export interface AuthResponse {
-  token: string;
-  user: {
-    id: string;
-    name: string;
-    email: string;
-  };
+  access_token: string;
 }
