@@ -1,6 +1,8 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
 import { SignInRequest, SignUpRequest, AuthResponse } from "../../types/auth";
 import authService from "./services/authService";
+import { jwtDecode } from "jwt-decode";
 
 // Define the shape of the auth state
 interface AuthState {
@@ -30,11 +32,13 @@ export const signIn = createAsyncThunk(
       const response = await authService.signIn(credentials);
 
       // Store the token and user in localStorage
-      localStorage.setItem("token", response.token);
-      localStorage.setItem("user", JSON.stringify(response.user));
+      localStorage.setItem("token", response.access_token);
 
+      const decodedUser = jwtDecode(response.access_token);
+
+      localStorage.setItem("user", JSON.stringify(decodedUser));
       // Set the auth header for future requests
-      authService.setAuthHeader(response.token);
+      authService.setAuthHeader(response.access_token);
 
       return response;
     } catch (error: any) {
@@ -46,17 +50,22 @@ export const signIn = createAsyncThunk(
 );
 
 export const signUp = createAsyncThunk(
-  "auth/signUp",
+  "auth/signup",
   async (userData: SignUpRequest, thunkAPI) => {
     try {
       const response = await authService.signUp(userData);
+      console.log(response);
 
       // Store the token and user in localStorage
-      localStorage.setItem("token", response.token);
-      localStorage.setItem("user", JSON.stringify(response.user));
+      localStorage.setItem("token", response.access_token);
+
+      const decodedUser = jwtDecode(response.access_token);
+
+      localStorage.setItem("user", JSON.stringify(decodedUser));
+      //   localStorage.setItem("user", JSON.stringify(response.user));
 
       // Set the auth header for future requests
-      authService.setAuthHeader(response.token);
+      authService.setAuthHeader(response.access_token);
 
       return response;
     } catch (error: any) {
@@ -93,8 +102,8 @@ const authSlice = createSlice({
         (state, action: PayloadAction<AuthResponse>) => {
           state.isLoading = false;
           state.isAuthenticated = true;
-          state.user = action.payload.user;
-          state.token = action.payload.token;
+          state.user = localStorage.getItem("user");
+          state.token = action.payload.access_token;
         }
       )
       .addCase(signIn.rejected, (state, action) => {
@@ -115,8 +124,8 @@ const authSlice = createSlice({
         (state, action: PayloadAction<AuthResponse>) => {
           state.isLoading = false;
           state.isAuthenticated = true;
-          state.user = action.payload.user;
-          state.token = action.payload.token;
+          state.user = localStorage.getItem("user");
+          state.token = action.payload.access_token;
         }
       )
       .addCase(signUp.rejected, (state, action) => {
